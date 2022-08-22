@@ -2,8 +2,12 @@
 // request data for that city. fetch (url)
 // populate data
 
+
+// variables
+var searchformEl = document.querySelector("#searchbtn")
+
 var displayCurrentWeather = function () {
-    var apiUrl = ""
+    var apiURL = "http://api.openweathermap.org/data/2.5/forecast?id=524901&appid={53dfc2bbab4daa2b652b8ca5d214155b" 
 
     fetch(apiUrl)
     .then(function(response) {
@@ -21,3 +25,10 @@ var displayCurrentWeather = function () {
         alert("Unable to display weather");
     });
 };
+
+// when search button is clicked 
+searchformEl.addEventListener("submit", formSubmitHandler);
+
+
+
+
