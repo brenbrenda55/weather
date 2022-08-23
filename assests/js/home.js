@@ -4,30 +4,74 @@
 
 
 // variables
-var searchformEl = document.querySelector("#searchbtn")
+var searchformEl = document.getElementById("searchbtn"); console.log(searchbtn)
+var cityEl = document.getElementById("city")
+var pastSearchesEl = document.getElementById("pastSearches")
+var inputEl =document.querySelector("#input"); 
 
-var displayCurrentWeather = function () {
-    var apiURL = "http://api.openweathermap.org/data/2.5/forecast?id=524901&appid={53dfc2bbab4daa2b652b8ca5d214155b" 
 
-    fetch(apiUrl)
+
+// function for current forecast
+function currentForecast(city) {
+    var apiKey = 'bf38ae612140444abef29b253d307bfa';
+    var apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
+    console.log(apiUrl)
+     fetch(apiUrl)
     .then(function(response) {
+       if (response.ok) {
+           response.json().then(function(data){
+               console.log(data);
+           });
+       } else {
+           alert('Error: Weather Not Found');
+       }
+   })
+   .catch(function(error) {
+       alert("Unable to display weather");
+   });
+}
+
+
+//5 day forcast
+// var fiveDay = function () {
+    //var apiUrl = "api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={53dfc2bbab4daa2b652b8ca5d214155b}"
+     
+
+   // fetch(apiUrl)
+   // .then(function(response) {
         //request was successful
-        if (response.ok) {
-            console.log(response);
-            response.json().then(function(data){
-                console.log(data);
-            });
-        } else {
-            alert('Error: Weather Not Found');
-        }
-    })
-    .catch(function(error) {
-        alert("Unable to display weather");
-    });
+      //  if (response.ok) {
+     //       console.log(response);
+   ///         response.json().then(function(data){
+ //           //    console.log(data);
+          //  });
+        //} else {
+        //    alert('Error: Weather Not Found');
+      //  }
+    //})
+    //.catch(function(error) {
+   //     alert("Unable to display weather");
+  // });
+//};
+
+
+
+//save city 
+var pastSearchesEl = function (){
+    localStorage.setItem(city,data);
+    JSON.Stringify(data)
+
 };
 
+
+function searchCity (event) { 
+    event.preventDefault()
+    currentForecast (inputEl.value)
+}
+
+
 // when search button is clicked 
-searchformEl.addEventListener("submit", formSubmitHandler);
+searchformEl.addEventListener("click",searchCity);
 
 
 
