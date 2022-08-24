@@ -8,13 +8,56 @@ var searchformEl = document.getElementById("searchbtn"); console.log(searchbtn)
 var cityEl = document.getElementById("city")
 var pastSearchesEl = document.getElementById("pastSearches")
 var inputEl =document.querySelector("#input"); 
+var tempEl = document.querySelector("#temp");
+var windEl = document.querySelector("wind");
+var uvIndexEl = document.querySelector("#uv-index");
 
+
+
+// geo code for long/lat
+function coordinations () {
+    var apiKey = 'bf38ae612140444abef29b253d307bfa';
+    var apiUrlG ='api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={apiKey}';
+    window.addEventListener("load", () => {
+        let long;
+        let lag;
+
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition((position) => {
+                var lat = posotion.coords.latitude;
+                var long = position.coords.longitutde;
+                fetch(apiUrl)
+                    .then((response) =>(
+                        response.json()
+                    ))})}})}
 
 
 // function for current forecast
 function currentForecast(city) {
     var apiKey = 'bf38ae612140444abef29b253d307bfa';
-    var apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
+    var apiUrl = `api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid=${apiKey}`
+    console.log(apiUrl)
+     fetch(apiUrl)
+    .then(function(response) {
+       if (response.ok) {
+           response.json().then(function(data){
+               console.log(data);
+           });
+       } else {
+           alert('Error: Weather Not Found');
+       }
+   })
+   .catch(function(error) {
+       alert("Unable to display weather");
+   });
+}
+
+
+
+// function for 5 day forecast forecast
+function fiveday(city) {
+    var apiKey = 'bf38ae612140444abef29b253d307bfa';
+    var apiUrl = `api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=${apiKey}`
     console.log(apiUrl)
      fetch(apiUrl)
     .then(function(response) {
@@ -56,6 +99,14 @@ function currentForecast(city) {
 
 
 
+// function for current forecast
+//function currentForecast(city) {
+    //var apiKey = 'bf38ae612140444abef29b253d307bfa';
+   // var apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
+    //console.log(apiUrl)
+
+
+
 //save city 
 var pastSearchesEl = function (){
     localStorage.setItem(city,data);
@@ -72,7 +123,5 @@ function searchCity (event) {
 
 // when search button is clicked 
 searchformEl.addEventListener("click",searchCity);
-
-
 
 
