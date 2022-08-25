@@ -12,6 +12,9 @@ var tempEl = document.querySelector("#temp");
 var windEl = document.querySelector("wind");
 var uvIndexEl = document.querySelector("#uv-index");
 
+//var lat = posotion.coords.latitude
+//var long = position.coords.longitutde
+
 
 
 // geo code for long/lat
@@ -20,22 +23,29 @@ function coordinations () {
     var apiUrlG ='api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={apiKey}';
     window.addEventListener("load", () => {
         let long;
-        let lag;
+        let lat;
 
         if (navigator.geolocation){
             navigator.geolocation.getCurrentPosition((position) => {
-                var lat = posotion.coords.latitude;
-                var long = position.coords.longitutde;
-                fetch(apiUrl)
+                console.log(position)
+                long = position.coords.longitude;
+                lat = position.coords.longitude;
+                fetch(apiUrlG)
                     .then((response) =>(
                         response.json()
                     ))})}})}
+
+//var {temp,wind,uvindex} = data.currentForecast (city)
+tempEl.textContent = temp;
+//windEl.textContent = wind;
+//uvIndexEl.textContent = uv-index;
+
 
 
 // function for current forecast
 function currentForecast(city) {
     var apiKey = 'bf38ae612140444abef29b253d307bfa';
-    var apiUrl = `api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid=${apiKey}`
+    var apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
     console.log(apiUrl)
      fetch(apiUrl)
     .then(function(response) {
